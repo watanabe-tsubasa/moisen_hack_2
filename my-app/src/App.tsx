@@ -16,8 +16,10 @@ function App() {
         liffId: import.meta.env.VITE_LIFF_ID
       })
       .then(() => {
+        console.log(`liff.init() done, ${liff.getContext()}`);
         console.log("LIFF init succeeded.");
         const context  = liff.getContext();
+        console.log(liff);
         const userId = context?.userId || 'testId'
         console.log(userId);
         setLineId(userId);
