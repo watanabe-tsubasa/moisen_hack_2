@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Stack, StackDivider, Text } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { defaultQuestions } from "../../utils/defaultQuestion";
 import { QuestionForm } from "../molecules/QuestionForm";
 import { handleScrollToTop } from "../../utils/handleScrollTop";
@@ -7,8 +7,17 @@ import Question from "../../utils/types/questionType";
 import { testQuestions } from "../../utils/testQuestionFisrt";
 import { useQuery } from "@tanstack/react-query";
 import { dataFetcher } from "../../utils/dataFetcher";
+import { LiffContext } from "../contexts/LiffContext";
 
 export const QuestionCard = () => {
+
+  const contextValue = useContext(LiffContext);
+  if (!contextValue) {
+    // handle the null context value, e.g., by returning, throwing an error, etc.
+    return null;
+  }
+  const { lineId } = contextValue;
+
 
   const cardRef = useRef<HTMLDivElement | null>(null);
 
@@ -48,6 +57,7 @@ export const QuestionCard = () => {
           <Box>
             <CardHeader>
               <Text>
+                {lineId}
                 以下の質問に回答し、送信ボタンを押してください。
                 回答に合わせて３回質問いたします。
               </Text>
