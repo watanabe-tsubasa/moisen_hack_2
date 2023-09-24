@@ -24,17 +24,6 @@ export const Question_3: Question[] = [
   },
   {
     "questionId": 14,
-    "question": "test question script 14",
-    "format": "Select",
-    "choices": [
-      "test selecter1",
-      "test selecter2",
-      "test selecter3",
-      "test selecter4",
-    ],
-  },
-  {
-    "questionId": 15,
     "question": "性格はご自身でどう思いますか",
     "format": "Select",
     "choices": [

@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Stack, StackDivider, Text } from "@chakra-ui/react";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { defaultQuestions } from "../../utils/questions/defaultQuestion";
 import { QuestionForm } from "../molecules/QuestionForm";
 import { handleScrollToTop } from "../../utils/handleScrollTop";
@@ -43,7 +43,6 @@ export const QuestionCard = () => {
   }
 
   const onClickSendButton = async () => {
-    setCount(prevCount => prevCount + 1);
     setCardOpacity(0.5);
     const postData = {
       timeStamp: timeStamp,
@@ -66,6 +65,10 @@ export const QuestionCard = () => {
     setCardOpacity(1);
     setAnswers({});
   }
+  
+  useEffect(() => {
+    setCount(count + 1);
+  }, [askingQuestions]);
 
   if (error) {return 'もう一度開き直してください。'}
 
@@ -83,6 +86,7 @@ export const QuestionCard = () => {
             <Divider />
           </Box>}
         <CardBody>
+          <Text>{count}</Text>
           <Stack divider={<StackDivider />}>
             {askingQuestions.map((elem, idx) => {
               return (
