@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import liff from "@line/liff";
 import { LiffContext } from "./components/contexts/LiffContext";
-import { CommonSpinner } from "./components/atoms/CommonSpinner";
-import { CommonSlider } from "./components/atoms/CommonSlider";
 import { Box } from "@chakra-ui/react";
-import { CommonSwitch } from "./components/atoms/CommonSwitch";
-import { CommonMenu } from "./components/atoms/CommonMenu";
-import { CommonTextArea } from "./components/atoms/CommonTextArea";
+import { PageHeader } from "./components/PageHeader";
+import { PageFooter } from "./components/PageFooter";
+import { PageBody } from "./components/PageBody";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -28,11 +26,9 @@ function App() {
 
   return (
     <Box>
-      <CommonSpinner />
-      <CommonSlider />
-      <CommonSwitch />
-      <CommonMenu menuList={['test1', 'test2', 'test3']} />
-      <CommonTextArea />
+      <PageHeader />
+      <PageBody />
+      <PageFooter />
     </Box>
   );
 }

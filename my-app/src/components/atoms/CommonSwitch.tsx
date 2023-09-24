@@ -1,17 +1,29 @@
-import { Box, FormControl, FormLabel, SimpleGrid, Switch } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, HStack, Switch, Text } from "@chakra-ui/react";
+import { initialState } from "../reducer/reducer";
+import Action from "../../utils/types/actionType";
+import { SET_CHECKED } from "../reducer/actionTypes";
 
-export const CommonSwitch = () => {
+type CommonSwitchProps = {
+  state: typeof initialState;
+  dispatch: React.Dispatch<Action>;
+}
 
-  const [isChecked, setIsChecked] = useState(false);
+export const CommonSwitch: React.FC<CommonSwitchProps> = (props) => {
+
+  const { state, dispatch } = props;
+  const { isChecked } = state;
 
   const handleSwitchChange = () => {
-    setIsChecked(!isChecked);
+    dispatch({ type: SET_CHECKED, payload: !isChecked});
   };
 
   return (
     <Box p={6}>
-      <Switch isChecked={isChecked} onChange={handleSwitchChange} />
+      <HStack>
+        <Text fontSize={10}>いいえ</Text>
+        <Switch size="lg" px={2} isChecked={isChecked} onChange={handleSwitchChange} />
+        <Text fontSize={10}>はい</Text>
+      </HStack>
     </Box>
   );
 };

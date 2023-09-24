@@ -1,13 +1,22 @@
-import { Box, Text, Textarea } from "@chakra-ui/react"
-import { ChangeEvent, useState } from "react"
+import { Box, Textarea } from "@chakra-ui/react"
+import { ChangeEvent } from "react"
+import { initialState } from "../reducer/reducer";
+import Action from "../../utils/types/actionType";
+import { SET_VALUE } from "../reducer/actionTypes";
 
+type CommonTextAreaProps = {
+  state: typeof initialState;
+  dispatch: React.Dispatch<Action>
+}
 
-export const CommonTextArea = () => {
-  let [value, setValue] = useState('')
+export const CommonTextArea: React.FC<CommonTextAreaProps> = (props) => {
+  
+  const { state, dispatch } = props;
+  const { value } = state;
 
   let handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     let inputValue = event.target.value
-    setValue(inputValue)
+    dispatch({ type: SET_VALUE, payload: inputValue})
   }
   return (
     <Box p={6}>

@@ -1,11 +1,19 @@
 import { Box, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { initialState } from "../reducer/reducer";
+import Action from "../../utils/types/actionType";
+import { SET_SLIDER_VALUE } from "../reducer/actionTypes";
 
-export const CommonSlider = () => {
+type CommonSliderProps = {
+  state: typeof initialState;
+  dispatch: React.Dispatch<Action>;
+}
 
-  const [sliderValue, setSliderValue] = useState(50);
-  const onChangeSledeVal = (val: number) => {
-    setSliderValue(val);
+export const CommonSlider: React.FC<CommonSliderProps> = (props) => {
+
+  const { state, dispatch } = props;
+  const { sliderValue } = state;
+  const onChangeSledeVal = (sliderValue: number) => {
+    dispatch({ type: SET_SLIDER_VALUE, payload: sliderValue });
   }
 
   const labelStyles = {
@@ -15,7 +23,7 @@ export const CommonSlider = () => {
   }
 
   return (
-    <Box p={6}>
+    <Box p={6} pt={10}>
       <Slider
         aria-label='slider-ex-6'
         min={30}
