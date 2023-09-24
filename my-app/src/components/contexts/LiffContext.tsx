@@ -1,3 +1,7 @@
 import { createContext } from "react";
 
-export const LiffContext = createContext(null);
+type LiffContextType = {
+  lineId: string | null;
+}
+
+export const LiffContext = createContext<LiffContextType | null>(null);
