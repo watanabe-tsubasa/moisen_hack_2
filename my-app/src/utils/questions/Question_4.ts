@@ -1,6 +1,6 @@
-import Question from "./types/questionType";
+import Question from "../types/questionType";
 
-export const testQuestions: Question[] = [
+export const Question_4: Question[] = [
   {
     "questionId": 11,
     "question": "test question script 11",

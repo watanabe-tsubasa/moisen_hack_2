@@ -1,51 +1,70 @@
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Stack, StackDivider, Text } from "@chakra-ui/react";
 import { useContext, useRef, useState } from "react";
-import { defaultQuestions } from "../../utils/defaultQuestion";
+import { defaultQuestions } from "../../utils/questions/defaultQuestion";
 import { QuestionForm } from "../molecules/QuestionForm";
 import { handleScrollToTop } from "../../utils/handleScrollTop";
-import Question from "../../utils/types/questionType";
-import { testQuestions } from "../../utils/testQuestionFisrt";
 import { useQuery } from "@tanstack/react-query";
 import { dataFetcher } from "../../utils/dataFetcher";
 import { LiffContext } from "../contexts/LiffContext";
+import { timestamp } from "../../utils/timestamp";
+import { testDataFetcher } from "../../utils/testDataFetcher";
+
+import Question from "../../utils/types/questionType";
+import { Question_1 } from "../../utils/questions/Question_1";
+import { Question_2 } from "../../utils/questions/Question_2";
+import { Question_3 } from "../../utils/questions/Question_3";
+
 
 export const QuestionCard = () => {
 
   const contextValue = useContext(LiffContext);
   if (!contextValue) {
-    // handle the null context value, e.g., by returning, throwing an error, etc.
     return null;
   }
-  const { lineId } = contextValue;
-
+  const { lineId, liff } = contextValue;
+  const timeStamp = timestamp();
 
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const { error, data } = useQuery({
     queryKey: ['data'],
-    queryFn: dataFetcher
+    queryFn: testDataFetcher
   })
 
   const [askingQuestions, setAskingQestions] = useState<Question[]>(defaultQuestions);
-  const [isFirst, setIsFirst] = useState(true);
+  const [count, setCount] = useState(0);
   const [cardOpacity, setCardOpacity] = useState(1);
 
-  const [answers, setAnswers] = useState<any[]>([]);
+  const [answers, setAnswers] = useState<Record<number, any>>({});
   const handleAnswerChange = (id: number, answer: any) => {
-    const newAnswers = [...answers];
+    const newAnswers = { ...answers };
     newAnswers[id] = answer;
     setAnswers(newAnswers);
   }
 
   const onClickSendButton = async () => {
-    setIsFirst(false);
+    setCount(prevCount => prevCount + 1);
     setCardOpacity(0.5);
-    console.log(answers);
-    const newData = await dataFetcher()
+    const postData = {
+      timeStamp: timeStamp,
+      lineId: lineId,
+      content: answers
+    };
+    console.log(postData);
+    const newData = await testDataFetcher()
     if(cardRef.current){ cardRef.current.scrollTop = 0; }
     handleScrollToTop('auto');
-    setAskingQestions(testQuestions);
+    if (count === 1) {
+      setAskingQestions(Question_1);
+    } else if (count === 2) {
+      setAskingQestions(Question_2)
+    } else if (count === 3) {
+      setAskingQestions(Question_3)
+    } else {
+      liff.closeWindow();
+    }
     setCardOpacity(1);
+    setAnswers({});
   }
 
   if (error) {return 'もう一度開き直してください。'}
@@ -53,13 +72,12 @@ export const QuestionCard = () => {
   return (
     <Box opacity={cardOpacity} p={4} h="95vh" w="100%" bgColor="teal.50">
       <Card h="90vH" overflow="auto" ref={cardRef}>
-        {isFirst && 
+        {count == 0 && 
           <Box>
             <CardHeader>
               <Text>
-                {lineId}
                 以下の質問に回答し、送信ボタンを押してください。
-                回答に合わせて３回質問いたします。
+                あなたの回答に合わせて何度か質問しますので、よろしくお願いします。
               </Text>
             </CardHeader>
             <Divider />
@@ -74,7 +92,7 @@ export const QuestionCard = () => {
                   question={elem.question}
                   format={elem.format}
                   choices={elem.choices}
-                  onAnswerChange={(answer) => handleAnswerChange(idx, answer)}
+                  onAnswerChange={(answer) => handleAnswerChange(elem.questionId, answer)}
                 />
               )
             })}

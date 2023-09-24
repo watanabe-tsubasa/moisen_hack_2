@@ -1,10 +1,21 @@
-import testAPIType from "./types/testAPIType";
+import responseType from "./types/responseType";
 
-const baseURL = 'https://script.google.com/macros/s/AKfycby3Zcpmsq6QJqNtAXTeNlXiFYH0oRfurF9X7zo-j9JAkZEX2wgx_7xZ_ZQxtkk-ftXT/exec'
+export const dataFetcher = async (): Promise<responseType | null> => {
 
-export const dataFetcher = async (): Promise<testAPIType> => {
+  const baseURL = 'http://localhost:3000/?url=https://script.google.com/macros/s/AKfycbySrNjZ-_73Vbw417tLF7ANN_wQXnJHux1v86t0EP01mVcOGtIVhRcBobLhR-PnNCur5w/exec'
+  
+  const data = {
+    timeStamp: '2023/09/24 11:05',
+    lineId: 'XXXXX',
+    content: [{index: '0', value: 'TRUE'}]
+  };
+  
   const res = await fetch(baseURL, {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   })
   const json = await res.json();
   console.log(json);

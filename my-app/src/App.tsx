@@ -9,6 +9,7 @@ import { PageBody } from "./components/PageBody";
 function App() {
 
   const [lineId, setLineId] = useState<string | null>(null);
+  const [liffObject, setLiffObject] = useState<any>(null);
 
   useEffect(() => {
     liff
@@ -23,6 +24,7 @@ function App() {
         const userId = context?.userId || 'testId'
         console.log(userId);
         setLineId(userId);
+        setLiffObject(liff)
       })
       .catch((e: Error) => {
         console.log(`LIFF init failed.: ${e}`);
@@ -31,7 +33,7 @@ function App() {
   });
 
   return (
-    <LiffContext.Provider value={{lineId: lineId}}>
+    <LiffContext.Provider value={{lineId: lineId, liff: liffObject}}>
       <Box>
         <PageHeader />
         <PageBody />
