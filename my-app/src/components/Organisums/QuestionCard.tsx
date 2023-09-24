@@ -21,9 +21,17 @@ export const QuestionCard = () => {
   const [isFirst, setIsFirst] = useState(true);
   const [cardOpacity, setCardOpacity] = useState(1);
 
+  const [answers, setAnswers] = useState<any[]>([]);
+  const handleAnswerChange = (id: number, answer: any) => {
+    const newAnswers = [...answers];
+    newAnswers[id] = answer;
+    setAnswers(newAnswers);
+  }
+
   const onClickSendButton = async () => {
     setIsFirst(false);
     setCardOpacity(0.5);
+    console.log(answers);
     const newData = await dataFetcher()
     if(cardRef.current){ cardRef.current.scrollTop = 0; }
     handleScrollToTop('auto');
@@ -56,6 +64,7 @@ export const QuestionCard = () => {
                   question={elem.question}
                   format={elem.format}
                   choices={elem.choices}
+                  onAnswerChange={(answer) => handleAnswerChange(idx, answer)}
                 />
               )
             })}

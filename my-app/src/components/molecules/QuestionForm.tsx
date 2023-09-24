@@ -7,26 +7,59 @@ import { CommonTextArea } from "../atoms/CommonTextArea";
 import { useReducer } from "react";
 import { reducer, initialState } from "../reducer/reducer";
 
-export const QuestionForm: React.FC<Question> = (props) => {
+type QuestionFormProps = Question & {
+  onAnswerChange: (answer: any) => void;
+}
+
+export const QuestionForm: React.FC<QuestionFormProps> = (props) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { questionId, question, format, choices } = props;
+  const { questionId, question, format, choices, onAnswerChange } = props;
   const menuList = choices || [];
 
   let renderedComponent = null;
 
   switch (format) {
     case "Bool":
-      renderedComponent = <CommonSwitch state={state} dispatch={dispatch} />;
+      renderedComponent = (
+        <CommonSwitch
+          state={state}
+          dispatch={(action) => {
+            dispatch(action);
+            onAnswerChange(action.payload);
+          }} />
+        );
       break;
     case "Value":
-      renderedComponent = <CommonSlider state={state} dispatch={dispatch} />;
+      renderedComponent = (
+        <CommonSlider
+          state={state}
+          dispatch={(action) => {
+            dispatch(action);
+            onAnswerChange(action.payload);
+          }} />
+        );
       break;
     case "Select":
-      renderedComponent = <CommonMenu menuList={menuList} state={state} dispatch={dispatch} />;
+      renderedComponent = (
+        <CommonMenu
+          menuList={menuList}
+          state={state}
+          dispatch={(action) => {
+            dispatch(action);
+            onAnswerChange(action.payload);
+          }} />
+        );
       break;
     case "Text":
-      renderedComponent = <CommonTextArea state={state} dispatch={dispatch} />;
+      renderedComponent = (
+        <CommonTextArea
+          state={state}
+          dispatch={(action) => {
+            dispatch(action);
+            onAnswerChange(action.payload);
+          }} />
+        );
       break;
     default:
       renderedComponent = null; // 未知のフォーマットの場合は何も表示しない

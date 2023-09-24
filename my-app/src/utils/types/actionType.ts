@@ -15,7 +15,6 @@ type SetSliderAction = {
   payload: number;
 }
 
-// Combine all action types into a single type
-type Action = SetValueAction | SetCheckedAction | SetSliderAction; // Add more action types as needed using `|`
+type Action = SetValueAction | SetCheckedAction | SetSliderAction;
 
 export default Action;

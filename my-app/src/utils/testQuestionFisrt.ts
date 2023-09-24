@@ -2,23 +2,23 @@ import Question from "./types/questionType";
 
 export const testQuestions: Question[] = [
   {
-    "questionId": 1,
-    "question": "test question script 1",
+    "questionId": 11,
+    "question": "test question script 11",
     "format": "Bool",
   },
   {
-    "questionId": 2,
-    "question": "test question script 2",
+    "questionId": 12,
+    "question": "test question script 12",
     "format": "Value",
   },
   {
-    "questionId": 3,
-    "question": "test question script 3",
+    "questionId": 13,
+    "question": "test question script 13",
     "format": "Value",
   },
   {
-    "questionId": 4,
-    "question": "test question script 4",
+    "questionId": 14,
+    "question": "test question script 14",
     "format": "Select",
     "choices": [
       "test selecter1",
@@ -28,13 +28,13 @@ export const testQuestions: Question[] = [
     ],
   },
   {
-    "questionId": 5,
-    "question": "test question script 5",
+    "questionId": 15,
+    "question": "test question script 15",
     "format": "Text",
   },
   {
-    "questionId": 6,
-    "question": "test question script 6",
+    "questionId": 16,
+    "question": "test question script 16",
     "format": "Text",
   },
 ]
